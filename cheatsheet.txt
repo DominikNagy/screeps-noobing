@@ -1,0 +1,2 @@
+Spawning a creep manually:          Game.spawns.Spawn1.createCreep([WORK,CARRY,MOVE,MOVE])
+Adding a role to a creep memory:    Game.creeps.Sarah.memory.role = 'haverster'
