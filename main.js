@@ -24,20 +24,20 @@ module.exports.loop = function () {
     }
 
     if (repairers < 1) {
-        Game.spawns.Spawn1.spawnCreep([WORK,CARRY,CARRY,MOVE,MOVE,MOVE], ""+Game.time, {memory: {role: 'repairer'}});
+        Game.spawns.Spawn1.spawnCreep([WORK,CARRY,MOVE,MOVE], ""+Game.time, {memory: {role: 'repairer'}});
     }
 
     else if (builders < 5) {
-        Game.spawns.Spawn1.spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE], ""+Game.time, {memory: {role: 'builder'}});
+        Game.spawns.Spawn1.spawnCreep([WORK,CARRY,MOVE,MOVE], ""+Game.time, {memory: {role: 'builder'}});
     }
 
     else {
         let spawnORupgrade = Math.random(); // deciding if the creep will upgrade the controller, or spawn
-        if (spawnORupgrade < 0.49) {
-            Game.spawns.Spawn1.spawnCreep([WORK,CARRY,CARRY,CARRY,CARRY,MOVE], ""+Game.time, {memory: {role: 'harvester', spawn: true}});
+        if (spawnORupgrade < 0.7) {
+            Game.spawns.Spawn1.spawnCreep([WORK,CARRY,CARRY,MOVE], ""+Game.time, {memory: {role: 'harvester', spawn: true}});
         }
         else
-            Game.spawns.Spawn1.spawnCreep([WORK,CARRY,CARRY,MOVE,MOVE,MOVE], ""+Game.time, {memory: {role: 'harvester', spawn: false}});
+            Game.spawns.Spawn1.spawnCreep([WORK,CARRY,MOVE,MOVE], ""+Game.time, {memory: {role: 'harvester', spawn: false}});
     }
 
     console.log("Harvesters: " +harvesters+ " Builders: " +builders+ " Repairers: " +repairers);
