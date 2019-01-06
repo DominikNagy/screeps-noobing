@@ -6,9 +6,11 @@
  * var mod = require('role.harvester');
  * mod.thing == 'a thing'; // true
  */
+var roleHarvester = require('role.harvester');
 
 module.exports = {
     run: function (creep) {
+        console.log("Running extensioners!");
         // function when creepy is carrying energy
         if (_.sum(creep.carry) === 0) {
             creep.memory.isEmpty = true;
@@ -18,7 +20,11 @@ module.exports = {
         }
 
         const target = creep.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
+        const extensions = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
+            filter: { structureType: STRUCTURE_EXTENSION }
+        });
 
+        console.log(extensions[0].energyCapacity+" "+extensions[0].energy);
         // harvest from source
         if (target && creep.memory.isEmpty === true) {
             if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
@@ -27,21 +33,15 @@ module.exports = {
         }
         // transfer to controller/spawn
         else {
-            if (creep.memory.spawn === true) {
-                if (Game.spawns['Spawn1'].energy === Game.spawns['Spawn1'].energyCapacity) {
-                    if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.controller);
+            if (extensions && creep.memory.spawn === true) {
+                for (let i in extensions) {
+                    if (creep.transfer(extensions[i], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                        creep.moveTo(extensions[i]);
                     }
                 }
-                else if (creep.transfer(Game.spawns.Spawn1, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(Game.spawns.Spawn1);
-                }
             }
-            else {
-                if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller);
-                }
-            }
+            else
+                roleHarvester.run(creep);
         }
     }
 };

@@ -6,6 +6,7 @@
  * var mod = require('role.builder');
  * mod.thing == 'a thing'; // true
  */
+var roleHarvester = require('role.harvester');
 
 module.exports = {
     run: function (creep) {
@@ -27,8 +28,12 @@ module.exports = {
         }
         // transfer to building
         else {
+
             if (creep.build(construction) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(construction);
+            }
+            else if (creep.build(construction) === ERR_INVALID_TARGET) {
+                roleHarvester.run(creep);
             }
         }
     }
