@@ -31,7 +31,7 @@ module.exports = {
                 creep.moveTo(target);
             }
         }
-        // transfer to controller/spawn
+        // transfer to extension
         else {
             if (extensions && creep.memory.spawn === true) {
                 for (let i in extensions) {
