@@ -1,3 +1,9 @@
+/*** TODO
+ * first fill the extension then fill the spawn
+ * repairers should fill the tower and the tower should repair buildings
+ *
+ */
+
 var roleHarvester = require('role.harvester');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
@@ -43,31 +49,31 @@ module.exports.loop = function () {
                 repairers++;
         }
     }
-    if (harvesters === 0 || harvesters === 1) {
-        Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,CARRY,MOVE,MOVE], ""+Game.time, {memory: { role: 'harvester', spawn: true }});
+    if (harvesters < 2) {
+        Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,CARRY,MOVE,MOVE], ""+Game.time, {memory: { role: 'harvester' }});
     }
     else if (harvesters < 7) {
-        let spawnORupgrade = Math.random(); // deciding if the creep will upgrade the controller, or spawn
-        if (spawnORupgrade < 0.60) {
-            Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], ""+Game.time, {
-                memory: { role: 'harvester', spawn: true },
-                energyStructures: [
-                    Game.spawns['Spawn1'],
-                    Game.getObjectById(extensions[0].id),
-                    Game.getObjectById(extensions[1].id),
-                    Game.getObjectById(extensions[2].id),
-                    Game.getObjectById(extensions[3].id),
-                    Game.getObjectById(extensions[4].id),
-                    Game.getObjectById(extensions[5].id),
-                    Game.getObjectById(extensions[6].id),
-                    Game.getObjectById(extensions[7].id),
-                    Game.getObjectById(extensions[8].id)
-                ]
-            });
-        }
-        else {
+        // let spawnORupgrade = Math.random(); // deciding if the creep will upgrade the controller, or spawn
+        // if (spawnORupgrade < 0.70) {
+        //     Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], ""+Game.time, {
+        //         memory: { role: 'harvester' },
+        //         energyStructures: [
+        //             Game.spawns['Spawn1'],
+        //             Game.getObjectById(extensions[0].id),
+        //             Game.getObjectById(extensions[1].id),
+        //             Game.getObjectById(extensions[2].id),
+        //             Game.getObjectById(extensions[3].id),
+        //             Game.getObjectById(extensions[4].id),
+        //             Game.getObjectById(extensions[5].id),
+        //             Game.getObjectById(extensions[6].id),
+        //             Game.getObjectById(extensions[7].id)
+        //             //Game.getObjectById(extensions[8].id)
+        //         ]
+        //     });
+        // }
+        // else {
             Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], "" + Game.time, {
-                memory: {role: 'harvester', spawn: false},
+                memory: {role: 'harvester' },
                 energyStructures: [
                     Game.spawns['Spawn1'],
                     Game.getObjectById(extensions[0].id),
@@ -82,7 +88,7 @@ module.exports.loop = function () {
                 ]
             });
         }
-    }
+    //}
     else if (repairers < 2) {
         Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], ""+Game.time, {
             memory: { role: 'repairer'},
@@ -120,7 +126,7 @@ module.exports.loop = function () {
     }
 
 
-    console.log("Harvesters: " +harvesters+ " Builders: " +builders+ " Repairers: " +repairers);
+    console.log("Harvesters: " +harvesters+ " | Builders: " +builders+ " | Repairers: " +repairers);
     //console.log(Game.spawns['Spawn1'].energy);
     for (let i in Game.creeps) {
         if (Game.creeps[i].memory.role === 'harvester') {
@@ -139,7 +145,7 @@ module.exports.loop = function () {
     }
 
     //clear memory
-    for(var i in Memory.creeps) {
+    for(let i in Memory.creeps) {
         if(!Game.creeps[i]) {
             delete Memory.creeps[i];
         }

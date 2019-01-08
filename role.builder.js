@@ -28,7 +28,6 @@ module.exports = {
         }
         // transfer to building
         else {
-
             if (creep.build(construction) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(construction);
             }
