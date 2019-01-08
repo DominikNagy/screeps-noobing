@@ -43,8 +43,10 @@ module.exports.loop = function () {
                 repairers++;
         }
     }
-    
-    if (harvesters < 7) {
+    if (harvesters === 0 || harvesters === 1) {
+        Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,CARRY,MOVE,MOVE], ""+Game.time, {memory: { role: 'harvester', spawn: true }});
+    }
+    else if (harvesters < 7) {
         let spawnORupgrade = Math.random(); // deciding if the creep will upgrade the controller, or spawn
         if (spawnORupgrade < 0.60) {
             Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], ""+Game.time, {
@@ -81,7 +83,6 @@ module.exports.loop = function () {
             });
         }
     }
-
     else if (repairers < 2) {
         Game.spawns['Spawn1'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], ""+Game.time, {
             memory: { role: 'repairer'},
