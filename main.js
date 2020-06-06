@@ -36,7 +36,7 @@ module.exports.loop = function () {
     let builders = 0;
     let harvesters = 0;
     let repairers = 0;
-
+	// hello this is a comment from cmder on test branch
     for (let i in Game.creeps) {
         switch (Game.creeps[i].memory.role) {
             case 'harvester':
